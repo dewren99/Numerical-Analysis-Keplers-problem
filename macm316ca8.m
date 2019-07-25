@@ -1,6 +1,6 @@
 h = 0.0005;
 T=200;
-N = T/h;
+N = T/h; %
 q=ones(N+1,2,1); %3D, 400001 by 2 by 1
 size(q);
 p=ones(N+1,2,1); %3D, 400001 by 2 by 1
