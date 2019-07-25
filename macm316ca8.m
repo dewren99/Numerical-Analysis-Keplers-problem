@@ -1,14 +1,14 @@
 h = 0.0005;
 T=200;
 N = T/h; %=400000
-q=ones(N+1,2); %3D, 400001 by 2 by 1
+q=ones(N+1,2);
 size(q);
-p=ones(N+1,2); %400001 by 2 by 1
+p=ones(N+1,2);
 A=ones(N+1,1); %Angular momentum A(t)
 H=ones(N+1,1); %Hamiltonian H(t)
 
-A_symplecticEuler = ones(N,1);
-H_symplecticEuler = ones(N,1);
+A_symplecticEuler = ones(N+1,1);
+H_symplecticEuler = ones(N+1,1);
 
 e = 0.6;
 
@@ -37,20 +37,24 @@ for i = 1:1:N+1
 end
 
 figure(1)
-plot(q(:,1),q(:,2),'r.');
-title('Fig 1. Part1 q1-q2 plane');
+plot(q(:,1),q(:,2));
+title("Fig 1. Position of the moving planet at time t_n using Euler's method")
+xlabel('q1')
+ylabel('q2')
 
 figure(2)
-plot(A,'r');
-title('Angular Momentum');
+plot(0:N,A);
+title('Fig 2a. Angular Momentum');
+xlabel('t')
 ylabel('A(t)')
 
 figure(3)
-plot(H,'r');
-title('Hamiltonian')
+plot(0:N,H);
+title('Fig 2b. Hamiltonian')
+xlabel('t')
 ylabel('H(t)')
 
-for i = 1:1:N
+for i = 1:1:N+1
     q(i+1,1) = q(i,1)+h*p(i,1);
     q(i+1,2) = q(i,2)+h*p(i,2);
     
@@ -64,10 +68,20 @@ for i = 1:1:N
 end
 
 figure(4)
-plot(q(:,1),q(:,2),'r.');
+plot(q(:,1),q(:,2),'r');
+title("Fig 3a. Position of the moving planet at time t_n using symplectic Euler method");
+xlabel('q1');
+ylabel('q2');
 
 figure(5)
-plot(A_symplecticEuler,'r');
+plot(0:N,A_symplecticEuler,'r');
+title('Fig 3b. Angular Momentum');
+xlabel('t');
+ylabel('A(t)');
+
 
 figure(6)
-plot(H_symplecticEuler,'r');
+plot(0:N,H_symplecticEuler,'r');
+title('Fig 3c. Hamiltonian');
+xlabel('t');
+ylabel('H(t)');
