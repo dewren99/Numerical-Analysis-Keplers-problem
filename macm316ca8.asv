@@ -1,14 +1,11 @@
 h = 0.0005;
 T=200;
-N = T/h; %=400000
-q=ones(N+1,2); %3D, 400001 by 2 by 1
+N = T/h; % =400000
+q=ones(N+1,2,1); %3D, 400001 by 2 by 1
 size(q);
-p=ones(N+1,2); %400001 by 2 by 1
+p=ones(N+1,2,1); %3D, 400001 by 2 by 1
 A=ones(N+1,1); %Angular momentum A(t)
 H=ones(N+1,1); %Hamiltonian H(t)
-
-A_symplecticEuler = ones(N,1);
-H_symplecticEuler = ones(N,1);
 
 e = 0.6;
 
@@ -54,20 +51,10 @@ for i = 1:1:N
     q(i+1,1) = q(i,1)+h*p(i,1);
     q(i+1,2) = q(i,2)+h*p(i,2);
     
-    p_euler=(h)/(((q(i+1,1)^2 +q(i+1,2)^2))^(3/2));
+    frac=(h)/(((q(i+1,1)^2 +q(i+1,2)^2))^(3/2));
+    p(i+1,1)=p(i,1)-frac*q(i+1,1);
+    p(i+1,2)=p(i,2)-frac*q(i+1,2);
     
-    p(i+1,1)=p(i,1)-p_euler*q(i+1,1);
-    p(i+1,2)=p(i,2)-p_euler*q(i+1,2);
-    
-   A_symplecticEuler(i)=q(i,1)*p(i,2)-q(i,2)*p(i,1);
-   H_symplecticEuler(i)=(1/2)*(p(i,1)^2+p(i,2)^2)-1/(sqrt(q(i,1)^2+q(i,2)^2));
+   Aa(i)=q(i,1)*p(i,2)-q(i,2)*p(i,1);
+   Hh(i)=(1/2)*(p(i,1)^2+p(i,2)^2)-1/(sqrt(q(i,1)^2+q(i,2)^2));
 end
-
-figure(4)
-plot(q(:,1),q(:,2),'r.');
-
-figure(5)
-plot(A_symplecticEuler,'r');
-
-figure(6)
-plot(H_symplecticEuler,'r');
